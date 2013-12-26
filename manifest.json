@@ -14,7 +14,8 @@
   },
   "permissions": [
     "https://secure.flickr.com/",
-    "tabs"
+    "tabs",
+    "http://browsing-history-visualizer.herokuapp.com/"
   ]
 
  //"content_scripts": [

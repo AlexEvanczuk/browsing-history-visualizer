@@ -1,0 +1,4 @@
+1.  Use XMLHTTPRequest from chrome extension to postgresql database to input data into database
+2.  Create front-end for flask app on heroku app
+3.  Pull data from database based on session id
+4.  Use D3 to intelligently display browsing data
