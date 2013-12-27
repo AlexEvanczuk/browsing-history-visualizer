@@ -1,6 +1,6 @@
 // Create cross-origin XMLHttpRequest to send data to the PSQL database
 var xhr = new XMLHttpRequest();
-xhr.open("POST","browsing-history-visualizer.heroku.com/api",true)''
+xhr.open("POST","http://browsing-history-visualizer.heroku.com/api",true);
 
 // Use background page console
 var bkg = chrome.extension.getBackgroundPage();
@@ -17,7 +17,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     	if(url != undefined){
     		newTime = new Date().getTime();
     		bkg.console.log(current + " (" + (newTime - n) + ")\n" + url);
-    		xhr.send("site1=" + current + "&time=" + (newtime-n) + "&site2=" + url);    		
+    		xhr.send("site1=" + current + "&time=" + (newTime-n) + "&site2=" + url);    		
     		n = newTime;
     		current = url;
     	}
@@ -43,7 +43,7 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
 		} else {
     		newTime = new Date().getTime();
     		bkg.console.log(current + " (" + (newTime - n) + ")\n" + url);
-    		xhr.send("site1=" + current + "&time=" + (newtime-n) + "&site2=" + url);
+    		xhr.send("site1=" + current + "&time=" + (newTime-n) + "&site2=" + url);
     		n = newTime;
     		current = url;
 		}

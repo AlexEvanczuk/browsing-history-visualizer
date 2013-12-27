@@ -1,5 +1,5 @@
 import os, requests, urlparse, psycopg2
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, render_template, send_from_directory, request
 #from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -11,15 +11,6 @@ databaseURL = "postgres://tijkqeozlvrknb:YnxZpXG4YeL44bNyky4CLlCA56@ec2-54-197-2
 #url = urlparse.urlparse(os.environ["DATABASE_URL"])
 url = urlparse.urlparse(databaseURL)
 
-conn = psycopg2.connect(
-    database=url.path[1:],
-    user=url.username,
-    password=url.password,
-    host=url.hostname,
-    port=url.port
-)
-
-
 #print("host: " + url.hostname)
 #print("port: " + str(url.port))
 #print("database: " + url.path[1:])
@@ -28,13 +19,21 @@ conn = psycopg2.connect(
 
 @app.route('/api', methods = ['POST'])
 def handle_post():
+	conn = psycopg2.connect(
+    database=url.path[1:],
+    user=url.username,
+    password=url.password,
+    host=url.hostname,
+    port=url.port
+)
 	cur = conn.cursor()
-	site1 = requests.get['site1']
-	time = requests.get['time']
-	site2 = requests.get['site2']
-	cur.execute("INSERT INTO connections VALUES (%s, %s, %s)",  site1, time, site2)
+	site1 = request.args['site1']
+	time = request.args['time']
+	site2 = request.args['site2']
+	print(site1 + ", " + time + ", " + site2)
+	#cur.execute("INSERT INTO connections VALUES (%s, %s, %s)",  site1, time, site2)
 	cur.execute("SELECT * FROM connections;")
-	conn.commit();
+	#conn.commit();
 	for record in cur:
 		print(record);
 	conn.close()
@@ -46,6 +45,13 @@ def hello_world():
 
 @app.route('/')
 def index():
+	conn = psycopg2.connect(
+    database=url.path[1:],
+    user=url.username,
+    password=url.password,
+    host=url.hostname,
+    port=url.port
+)
 	cur = conn.cursor()
 	#cur.execute("INSERT INTO users VALUES 1;")
 	cur.execute("INSERT INTO connections VALUES (%s, %s, %s)",  ("amazon.com", 1500, "facebook.com"))
