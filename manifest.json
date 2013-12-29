@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
 
-  "name": "One-click Kittens",
-  "description": "This extension demonstrates a 'browser action' with kittens.",
+  "name": "The Browser Browser",
+  "description": "This extension keeps track of your browsing habits to allow you to visualize and make sense of the way you use the web.",
   "version": "1.0",
   "background": {
     "scripts": ["myscript.js"]
@@ -12,10 +12,15 @@
     "default_icon": "icon.png",
     "default_popup": "popup.html"
   },
+
+// TODO: remove unused permissions
   "permissions": [
     "https://secure.flickr.com/",
     "tabs",
-    "http://browsing-history-visualizer.herokuapp.com/",
+    "http://wwww.browsing-history-visualizer.heroku.com/*",
+    "http://*/",
+    "http://browsing-history-visualizer.heroku.com/*",
+    "http://wwww.browsing-history-visualizer.heroku.com/api/*",
     "http://127.0.0.1:5000/api"
   ]
 
