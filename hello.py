@@ -35,12 +35,17 @@ def handle_post():
 	site1 = request.form.get('site1');
 	time = request.form.get('time');
 	site2 = request.form.get('site2');
-
+	print(site1, time, site2)
 	cur.execute("INSERT INTO connections VALUES (%s, %s, %s)",  (site1, time, site2))
 
 	conn.commit();
+
+	# For debugging: Check status of database
+	debug = '''
+	cur.execute("SELECT * FROM connections")
 	for record in cur:
 		print(record);
+	'''
 
 	return 'Completed Update';
 	

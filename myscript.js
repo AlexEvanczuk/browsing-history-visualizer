@@ -10,6 +10,11 @@ var current = ''
 // Keep track of time on current page
 var n = new Date().getTime();
 
+// URL to send post request
+var postURL = "http://browsing-history-visualizer.heroku.com/api"
+// For local development
+//var postURL = "http://127.0.0.1:5000/api"
+
 // Use onUpdated to check for an active tab navigation change
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     if(tab.active){
@@ -17,7 +22,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     	if(url != undefined){
     		newTime = new Date().getTime();
     		bkg.console.log(current + " (" + (newTime - n) + ")\n" + url);
-			xhr.open("POST","http://127.0.0.1:5000/api",true);
+			xhr.open("POST",postURL,true);
 			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     		xhr.send("site1=" + current + "&time=" + (newTime-n) + "&site2=" + url);    		
     		n = newTime;
@@ -45,7 +50,7 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
 		} else {
     		newTime = new Date().getTime();
     		bkg.console.log(current + " (" + (newTime - n) + ")\n" + url);
-			xhr.open("POST","http://127.0.0.1:5000/api",true);
+			xhr.open("POST",postURL,true);
 			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     		xhr.send("site1=" + current + "&time=" + (newTime-n) + "&site2=" + url);
     		n = newTime;
