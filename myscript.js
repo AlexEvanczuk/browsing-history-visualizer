@@ -1,19 +1,19 @@
-// Create cross-origin XMLHttpRequest to send data to the PSQL database
-var xhr = new XMLHttpRequest();
-
 // Use background page console
 var bkg = chrome.extension.getBackgroundPage();
 
 // Keep track of the current page URL
 var current = ''
+var xhr = new XMLHttpRequest();
 
 // Keep track of time on current page
 var n = new Date().getTime();
 
 // URL to send post request
-var postURL = "http://browsing-history-visualizer.heroku.com/api"
+//var postURL = "http://browsing-history-visualizer.heroku.com/api"
 // For local development
-//var postURL = "http://127.0.0.1:5000/api"
+var postURL = "http://0.0.0.0:5000/api"
+//postURL = "http://127.0.0.1:5000/api"
+
 
 // Use onUpdated to check for an active tab navigation change
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
@@ -22,10 +22,19 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     	if(url != undefined){
     		newTime = new Date().getTime();
     		bkg.console.log(current + " (" + (newTime - n) + ")\n" + url);
+			// Create cross-origin XMLHttpRequest to send data to the PSQL database
 			xhr.open("POST",postURL,true);
 			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     		xhr.send("site1=" + current + "&time=" + (newTime-n) + "&site2=" + url);    		
-    		n = newTime;
+			
+			/*
+			xhr.onreadystatechange = function() {
+				if(this.readyState == 2) {
+					print(this.status());
+				}
+			}
+			*/
+			n = newTime;
     		current = url;
     	}
     }
@@ -50,9 +59,11 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
 		} else {
     		newTime = new Date().getTime();
     		bkg.console.log(current + " (" + (newTime - n) + ")\n" + url);
+    		// Create cross-origin XMLHttpRequest to send data to the PSQL database
 			xhr.open("POST",postURL,true);
 			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     		xhr.send("site1=" + current + "&time=" + (newTime-n) + "&site2=" + url);
+
     		n = newTime;
     		current = url;
 		}

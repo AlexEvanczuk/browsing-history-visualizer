@@ -18,9 +18,12 @@
     "https://secure.flickr.com/",
     "tabs",
     "http://wwww.browsing-history-visualizer.heroku.com/*",
+    "http://wwww.browsing-history-visualizer.herokuapp.com/*",
     "http://*/",
+    "http://0.0.0.0:5000/*",
     "http://browsing-history-visualizer.heroku.com/*",
     "http://wwww.browsing-history-visualizer.heroku.com/api/*",
+    "http://wwww.browsing-history-visualizer.herokuapp.com/api/*",
     "http://127.0.0.1:5000/api"
   ]
 

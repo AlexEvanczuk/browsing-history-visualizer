@@ -32,6 +32,7 @@ Connection URL:
 - Pull data from database based on session id
 - Use D3 to intelligently display browsing data
 - modify onclose of chrome extension to do one final row insert
+- stop timing when window/tab is deactivated
 
 ====================================== PSQL NOTES
 # Use the next line to delete connections (for testing/debugging)
