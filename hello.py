@@ -1,6 +1,7 @@
 import os, requests, urlparse, psycopg2
-from flask import Flask, render_template, send_from_directory, request
+from flask import Flask, render_template, send_from_directory, request, jsonify, json
 from flask.ext.sqlalchemy import SQLAlchemy
+from collections import OrderedDict
 
 app = Flask(__name__)
 
@@ -30,7 +31,6 @@ print(port)
 #print("psql -h " + url.hostname + " -p " + str(url.port) + " -u " + url.path[1:])
 '''
 
-#print(db)
 # Connect to the psql database using the url connection string
 conn = psycopg2.connect(
 database=url.path[1:],
@@ -39,10 +39,6 @@ password=url.password,
 host=url.hostname,
 port=url.port
 )
-#
-#try: 
-#except Exception, e: 
-#d	print "Exception raised: %s" % e
 
 print("entered app")
 # Handle post requests from the chrome extension by pulling the url args
@@ -75,13 +71,48 @@ def hello_world():
 @app.route('/')
 def index():
 	print("index")
+	return render_template('index.html')
+	#return 'Index Page'
+
+# This method returns all connection data and turns it into a form necessary for 
+# D3 force-directed graph
+@app.route('/yourdata.json')
+def yourdata():
 	cur = conn.cursor()
 	cur.execute("SELECT * FROM connections;")
 	result = cur.fetchall()
-	print(result)
+
+	# Create nodes as a list of dictionaries 
+	from itertools import groupby
+	from collections import OrderedDict
+	nodes = OrderedDict()
+	data = sorted(result, key=lambda x: x[0])
+	for key, group in groupby(data, lambda x: x[0]):
+		timeSum = sum([ele[1] for ele in group])
+		nodes[key] = timeSum
+	
+	# If the site2 is not in the nodelist, add it with a default time value of 1000
+	for key, group in groupby(result, lambda x: x[2]):
+		if key not in nodes:
+			nodes[key] = 1000
+
+	# Create links as a list of dictionaries 
+	edges = []
+	for (site1, time, site2) in result:
+		edge = {"source": nodes.keys().index(site1), "target":nodes.keys().index(site2), "value": nodes[site1]}
+		edges.append(edge)
+
+	# Refactor the nodes dictionary as a list of dictionaries with naemd fields
+	nodes = [{"name": n, "group": nodes[n]} for n in nodes]
+
+	# Create dataset
+	dataset = {}
+	dataset['nodes'] = nodes
+	dataset['links'] = edges
+
+	dataset = json.dumps(dataset)
 	cur.close()
-	return render_template('index.html')
-	#return 'Index Page'
+	return(dataset)
 
 # TODO: Complete
 @app.route('/user/<int:username>')

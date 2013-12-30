@@ -5,13 +5,13 @@ var bkg = chrome.extension.getBackgroundPage();
 var current = ''
 var xhr = new XMLHttpRequest();
 
-// Keep track of time on current page
+// Keep track of time on current pjsonage
 var n = new Date().getTime();
 
 // URL to send post request
-//var postURL = "http://browsing-history-visualizer.heroku.com/api"
+var postURL = "http://browsing-history-visualizer.herokuapp.com/api"
 // For local development
-var postURL = "http://0.0.0.0:5000/api"
+//var postURL = "http://0.0.0.0:5000/api"
 //postURL = "http://127.0.0.1:5000/api"
 
 
@@ -27,13 +27,6 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     		xhr.send("site1=" + current + "&time=" + (newTime-n) + "&site2=" + url);    		
 			
-			/*
-			xhr.onreadystatechange = function() {
-				if(this.readyState == 2) {
-					print(this.status());
-				}
-			}
-			*/
 			n = newTime;
     		current = url;
     	}

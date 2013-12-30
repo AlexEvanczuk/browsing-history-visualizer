@@ -41,3 +41,20 @@ cur.execute("DELETE FROM connections WHERE ctid IN (SELECT ctid FROM connections
 ====================================== ADDITIONAL FUNCTIONALITY
 - Record time of day of navigation
 - Category tagging of website (Alexa, zvelo, ...?)
+
+
+/*console.log(typeof(graph))
+
+console.log({{graph}})
+console.log(typeof({{graph}}))
+
+console.log(typeof({{graph|tojson|safe}}))
+console.log(typeof({{graph|tojson}}))
+
+console.log(typeof("{{graph|tojson|safe}}"))
+console.log(typeof("{{graph|tojson}})")
+console.log(typeof("{{graph}}"))
+
+var data = {{dataset|tojson|safe}};
+
+*/
