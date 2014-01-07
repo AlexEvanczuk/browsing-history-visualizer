@@ -9,14 +9,16 @@
    },
 
   "browser_action": {
-    "default_icon": "icon.png",
-    "default_popup": "popup.html"
+    "default_icon": "browserIcon.png",
+    //"default_popup": "popup.html",
+    "default_title": "The Browser Browser"
   },
 
 // TODO: remove unused permissions
   "permissions": [
     "https://secure.flickr.com/",
     "tabs",
+    "storage",
     "http://wwww.browsing-history-visualizer.heroku.com/*",
     "http://wwww.browsing-history-visualizer.herokuapp.com/*",
     "http://*/",

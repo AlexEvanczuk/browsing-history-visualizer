@@ -1,4 +1,14 @@
-// Use background page console
+// If user is a new user, generate a new userID for them from the server using AJAX
+// and input userID into local storage
+
+//TODO: Modify to get user 
+// Set redirect when click on browser action
+chrome.browserAction.onClicked.addListener(function(activeTab){
+  var newURL = "http://browsing-history-visualizer.herokuapp.com";
+  chrome.tabs.create({ url: newURL });
+});
+
+// Use background page console for debugging
 var bkg = chrome.extension.getBackgroundPage();
 
 // Keep track of the current page URL

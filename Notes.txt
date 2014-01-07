@@ -27,34 +27,36 @@ Connection info string:
 Connection URL:
     postgres://tijkqeozlvrknb:YnxZpXG4YeL44bNyky4CLlCA56@ec2-54-197-237-171.compute-1.amazonaws.com:5432/d8lbdq4dm2r9ia
 
-====================================== TO DO
-- Create front-end for flask app on heroku app
-- Pull data from database based on session id
-- Use D3 to intelligently display browsing data
+====================================== TO DO AND ADDITIONAL FUNCTIONALITY
+- Session IDs
+
+Graph:
+
+Histogram:
+
+Time-series:
+- Update connections database to include time of day
+
+Link-Flow:
+
+Time-of-day Grabber
+
+-- Far Fetched
+Geolocation?
+- Category tagging of website (Alexa, zvelo, ...?)
+
+====================================== BUGS AND NONINTUITIVE PERFORMANCE
 - modify onclose of chrome extension to do one final row insert
-- stop timing when window/tab is deactivated
+- stop timing when window/tab is deactivated 
 
 ====================================== PSQL NOTES
 # Use the next line to delete connections (for testing/debugging)
 cur.execute("DELETE FROM connections WHERE ctid IN (SELECT ctid FROM connections ORDER BY site1 LIMIT 13)")
+	cur.execute("DELETE FROM connections WHERE site1 LIKE '%smoothtouchscroll%'")
+	conn.commit()
 
-====================================== ADDITIONAL FUNCTIONALITY
-- Record time of day of navigation
-- Category tagging of website (Alexa, zvelo, ...?)
-
-
-/*console.log(typeof(graph))
-
-console.log({{graph}})
-console.log(typeof({{graph}}))
-
-console.log(typeof({{graph|tojson|safe}}))
-console.log(typeof({{graph|tojson}}))
-
-console.log(typeof("{{graph|tojson|safe}}"))
-console.log(typeof("{{graph|tojson}})")
-console.log(typeof("{{graph}}"))
-
-var data = {{dataset|tojson|safe}};
-
-*/
+====================================== VULNERABILITIES AND LIMITATIONS
+Vulnerabilities and Potential Fixes -
+- Session ID can be manually inserted into local storage for viewing and generatingother people's content
+	- Cross-reference with server-generated cookie on user's computer
+- 

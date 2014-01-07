@@ -6,11 +6,9 @@ from collections import OrderedDict
 app = Flask(__name__)
 
 urlparse.uses_netloc.append("postgres")
+
 # Hardcoded database URL
 databaseURL = "postgres://tijkqeozlvrknb:YnxZpXG4YeL44bNyky4CLlCA56@ec2-54-197-237-171.compute-1.amazonaws.com:5432/d8lbdq4dm2r9ia"
-#app.config['SQLALCHEMY_DATABASE_URI'] = databaseURL
-#db = SQLAlchemy(app)
-
 #url = urlparse.urlparse(os.environ["DATABASE_URL"])
 url = urlparse.urlparse(databaseURL)
 
@@ -40,7 +38,7 @@ host=url.hostname,
 port=url.port
 )
 
-print("entered app")
+print("Entered App")
 # Handle post requests from the chrome extension by pulling the url args
 # and inserting the values into the psql database
 @app.route('/api', methods = ['POST'])
@@ -70,7 +68,7 @@ def hello_world():
 
 @app.route('/')
 def index():
-	print("index")
+	print("Entered Index Page")
 	return render_template('index.html')
 	#return 'Index Page'
 
@@ -88,17 +86,22 @@ def yourdata():
 	nodes = OrderedDict()
 	data = sorted(result, key=lambda x: x[0])
 	for key, group in groupby(data, lambda x: x[0]):
+		key = urlparse.urlparse(key).netloc
 		timeSum = sum([ele[1] for ele in group])
 		nodes[key] = timeSum
 	
 	# If the site2 is not in the nodelist, add it with a default time value of 1000
 	for key, group in groupby(result, lambda x: x[2]):
+		key = urlparse.urlparse(key).netloc
 		if key not in nodes:
 			nodes[key] = 1000
 
 	# Create links as a list of dictionaries 
 	edges = []
 	for (site1, time, site2) in result:
+		site1 = urlparse.urlparse(site1).netloc
+		site2 = urlparse.urlparse(site2).netloc
+
 		edge = {"source": nodes.keys().index(site1), "target":nodes.keys().index(site2), "value": nodes[site1]}
 		edges.append(edge)
 
