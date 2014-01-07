@@ -16,6 +16,7 @@
 <p id="sitename">Site Name: ___________</p>
 <p id="sitetime">Site Time: ___________</p>
 <p id="sitederivatives">Site derivatives: ___________</p>""
+-->
 <style>
 	.node {
 	  stroke: #fff;
@@ -27,7 +28,7 @@
 	  stroke-opacity: .6;
 	}
 </style>
--->
+
 
 <script type="text/javascript" src="{{ url_for('static', filename='js/d3.v3.min.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.10.2.min.js') }}"></script>
@@ -89,7 +90,7 @@ d3.json("yourdata.json", function(error, graph) {
 
 </script>
 {% endblock %}
-
+<!-- HISTOGRAM BLOCK
 {% block histogram %}
 
 <style>
@@ -224,3 +225,4 @@ d3.json("yourdata.json", function(error, data) {
 </script>
 
 {% endblock %}
+-->

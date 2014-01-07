@@ -1,6 +1,5 @@
 import os, requests, urlparse, psycopg2
 from flask import Flask, render_template, send_from_directory, request, jsonify, json
-from flask.ext.sqlalchemy import SQLAlchemy
 from collections import OrderedDict
 
 app = Flask(__name__)
